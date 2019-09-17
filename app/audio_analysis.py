@@ -1,4 +1,4 @@
-from polyjamoury.app.spot import get_one_track, audio_analysis, audio_features, get_saved_artists
+from polyjamoury.app.spot import get_one_track, audio_analysis, audio_features, get_saved_artists, get_artist_top_tracks
 from polyjamoury.app.utils import get_track_uris, list_to_string, get_artist_uris
 from collections import Counter
 import json
@@ -23,16 +23,18 @@ def one_track_audio_features():
     data = audio_features(uri_data_str)
     return data
 
+
 def audio_features_all_saved():
     saved_artists = get_all_saved_artists()
-    saved_artist_uri = mapv(get_artist_uris, saved_artists)
-    print(saved_artist_uri)
-    print(Counter(saved_artist_uri))
-    return data
+    saved_artist_uri = set(mapv(get_artist_uris, saved_artists))
+    # 91 different top saved artists
+    for artist in saved_artist_uri:
+        all_artist_top_songs = get_artist_top_tracks(artist)
+    return all_artist_top_songs
 
 
 if __name__ == '__main__':
-
+    print(audio_features_all_saved())
     # print(one_track_audio_features())
     # artists = saved_artists
     # with open('artists.json', 'w') as f: f.write(json.dumps(artists, indent=2))

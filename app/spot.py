@@ -56,5 +56,9 @@ def audio_features(tracks):
     return spotify.audio_features(tracks)
 
 
+def get_artist_top_tracks(artist_id):
+    return spotify.artist_top_tracks(artist_id, country='US')
+
+
 if __name__ == '__main__':
     pass
