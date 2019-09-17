@@ -24,6 +24,10 @@ except Exception as e:
     sys.exit('Cannot connect to spotify')
 
 
+def get_one_track():
+    return spotify.current_user_saved_tracks(1, 0)
+
+
 def get_recent50():
     return spotify.current_user_saved_tracks(50, 0)
 
@@ -32,19 +36,25 @@ def get_next_50():
     return spotify.current_user_saved_tracks(50, 49)
 
 
+def get_saved_artists(time_range):
+    return spotify.current_user_top_artists(50, time_range=time_range)
+
+
 def playlist_create(name):
     return spotify.user_playlist_create(user_id, name)
 
 
+def add_tracks_to_playlist(pl_id, tracks):
+    return spotify.user_playlist_add_tracks(user_id, pl_id, tracks)
 
 
+def audio_analysis(track_id):
+    return spotify.audio_analysis(track_id)
 
 
+def audio_features(tracks):
+    return spotify.audio_features(tracks)
 
 
 if __name__ == '__main__':
     pass
-
-
-def add_tracks_to_playlist(pl_id, tracks):
-    return spotify.user_playlist_add_tracks(user_id, pl_id, tracks)
