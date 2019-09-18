@@ -28,13 +28,16 @@ def audio_features_all_saved():
     saved_artists = get_all_saved_artists()
     saved_artist_uri = set(mapv(get_artist_uris, saved_artists))
     # 91 different top saved artists
+    ttrack_database = []
     for artist in saved_artist_uri:
-        all_artist_top_songs = get_artist_top_tracks(artist)
-    return all_artist_top_songs
+        all_artist_top_songs = get_artist_top_tracks(artist)['tracks']
+        for song in all_artist_top_songs:
+          ttrack_database.append(song['uri'])
+    return ttrack_database
 
 
 if __name__ == '__main__':
-    print(audio_features_all_saved())
+    top_artist_top_tracks = audio_features_all_saved()
     # print(one_track_audio_features())
     # artists = saved_artists
-    # with open('artists.json', 'w') as f: f.write(json.dumps(artists, indent=2))
+    with open('top_artist_top_track.json', 'w') as f: f.write(json.dumps(top_artist_top_tracks, indent=2))
