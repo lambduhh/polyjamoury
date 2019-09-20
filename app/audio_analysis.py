@@ -1,12 +1,10 @@
 import random
-from polyjamoury.app.spot import get_one_track, audio_analysis, audio_features, get_saved_artists, \
-    get_artist_top_tracks, playlist_create
-from polyjamoury.app.utils import get_track_uris, list_to_string, get_artist_uris
+from polyjamoury.app.spot import get_one_track, audio_features, get_saved_artists, \
+    add_tracks_to_playlist, get_artist_top_tracks
+from polyjamoury.app.utils import get_track_uris, list_to_string, get_artist_uris, create_playlist
 import json
-from naga import mapv, append
+from naga import mapv, append, get_in
 from functools import partial
-import concurrent
-import concurrent.futures
 
 
 def get_all_saved_artists():
@@ -97,15 +95,28 @@ def is_song_color(color: dict, song: dict) -> bool:
         return True
 
 
-if __name__ == '__main__':
-    # top_artist_top_tracks = audio_features_all_saved()
+def create_color_data() -> list:
     with open('all_songs_features.json') as f:
         all_songs_features = json.load(f)
-    # print(is_song_color(color, list(song.values())[0]))
-    color = 'red'
-
+    color = input("choose a color... red, blue, green, pink, yellow")
     colorsongs = list(filter(partial(is_song_color, colors[color]), all_songs_features.values()))
-    print(len(colorsongs))
-    # twenty_songs = [next(colorsongs) for _ in range(30)]
-    # print(twenty_songs)
     with open('colorsongs.json', 'w') as f: f.write(json.dumps(colorsongs, indent=2))
+    return colorsongs
+
+
+def create_color_pl(colorsongs: list, color: str) -> None:
+    pl_id = create_playlist(color)
+    playlist = []
+    for song in colorsongs:
+        song_uris = get_artist_uris(song)
+        playlist.append(song_uris)
+    add_tracks_to_playlist(pl_id, playlist)
+    return None
+
+
+if __name__ == '__main__':
+    # top_artist_top_tracks = audio_features_all_saved()
+    colorsongs = create_color_data()
+    print(create_color_pl(colorsongs, "yellow"))
+    # with open('all_songs_features.json') as f:
+    #     all_songs_features = json.load(f)

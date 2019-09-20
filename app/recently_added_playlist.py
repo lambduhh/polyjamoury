@@ -1,6 +1,6 @@
 from naga import append, mapv
-from polyjamoury.app.spot import get_recent50, get_next_50, playlist_create, add_tracks_to_playlist
-from polyjamoury.app.utils import get_track_uris
+from polyjamoury.app.spot import get_recent50, get_next_50, add_tracks_to_playlist
+from polyjamoury.app.utils import get_track_uris, create_playlist
 
 
 # this program finds the 100 tracks that were most recently 'saved' to spotify, and creates a playlist with them
@@ -13,12 +13,6 @@ def saved_tracks() -> list:
     items_of_n50 = next50['items']
     all_100_tracks = append(items_of_r50, items_of_n50)
     return all_100_tracks
-
-
-def create_playlist(name_of_playlist):
-    playlist = playlist_create(name_of_playlist)
-    playlist_id = playlist['id']
-    return playlist_id
 
 
 def make_playlist_of_last_100(name_of_playlist, tracks):
