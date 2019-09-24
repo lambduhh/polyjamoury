@@ -56,7 +56,7 @@ colors = {"red": {"danceability": {"min": 0, 'max': .5},
                    "energy": {"min": .25, 'max': .8},
                    "acousticness": {"min": 0, 'max': .5},
                    "tempo": {"min": 0, 'max': 150},
-                   "valence": {"min": .5, 'max': .9},
+                   "valence": {"min": .5, 'max': .85},
                    },
           "green": {"danceability": {"min": .5, 'max': .7},
                     "energy": {"min": .2, 'max': .5},
@@ -117,6 +117,6 @@ def create_color_pl(colorsongs: list, color: str) -> None:
 if __name__ == '__main__':
     # top_artist_top_tracks = audio_features_all_saved()
     colorsongs = create_color_data()
-    print(create_color_pl(colorsongs, "yellow"))
+    print(create_color_pl(colorsongs, "green"))
     # with open('all_songs_features.json') as f:
     #     all_songs_features = json.load(f)

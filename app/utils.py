@@ -93,13 +93,13 @@ def spec_out(x, prev: Any = nil):
     raise Exception(x, (type(x), type(prev)))
 
 
-if __name__ == '__main__':
-    print(spec_out({'a': [1, 2, {'hi': 2}]}))
-
-    pprint.pprint(spec_out(json.load(open('data.json'))))
-
-
 def create_playlist(name_of_playlist):
     playlist = playlist_create(name_of_playlist)
     playlist_id = playlist['id']
     return playlist_id
+
+
+if __name__ == '__main__':
+    print(spec_out({'a': [1, 2, {'hi': 2}]}))
+
+    pprint.pprint(spec_out(json.load(open('data.json'))))
