@@ -1,4 +1,3 @@
-import random
 from polyjamoury.app.spot import get_one_track, audio_features, get_saved_artists, \
     add_tracks_to_playlist, get_artist_top_tracks
 from polyjamoury.app.utils import get_track_uris, list_to_string, get_artist_uris, create_playlist
@@ -7,7 +6,7 @@ from naga import mapv, append, get_in
 from functools import partial
 
 
-def get_all_saved_artists():
+def get_all_saved_artists() -> list:
     st = get_saved_artists('short_term')
     stitems = st['items']
     mt = get_saved_artists('medium_term')
@@ -115,8 +114,8 @@ def create_color_pl(colorsongs: list, color: str) -> None:
 
 
 if __name__ == '__main__':
+    #yellow3 = one_track_audio_features()
     # top_artist_top_tracks = audio_features_all_saved()
-    colorsongs = create_color_data()
-    print(create_color_pl(colorsongs, "green"))
-    # with open('all_songs_features.json') as f:
-    #     all_songs_features = json.load(f)
+    # colorsongs = create_color_data()
+    # print(create_color_pl(colorsongs, "green"))
+    #with open('yellow3.json', 'w') as f: f.write(json.dumps(yellow3, indent=2))

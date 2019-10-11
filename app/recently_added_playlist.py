@@ -25,5 +25,5 @@ def make_playlist_of_last_100(name_of_playlist, tracks):
 
 if __name__ == '__main__':
     all_tracks = saved_tracks()
-    # make_playlist_of_last_100("latest added jamzz 9/16/19", all_tracks)
-    #TODO -auto delete previous playlist of the same name
+    make_playlist_of_last_100("latest added jamzz 10/3/19", all_tracks)
+# TODO -auto delete previous playlist of the same name

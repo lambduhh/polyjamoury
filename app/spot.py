@@ -1,18 +1,35 @@
 # this is a module created to handle spotify/spotipy tasks
 import sys
 import spotipy
-from spotipy import util as util
+from spotipy import util as util, oauth2
 from polyjamoury.app.config import username, scope, client_id, client_secret_id, redirect_uri
 
-# sp_oauth = oauth2.SpotifyOAuth(client_id, client_secret_id, redirect_uri,
-#         scope=scope, cache_path=".cache-" + username )
-# code = sp_oauth.parse_response_code("https://www.google.com/?code=AQAi0EuThN4WJdi40tStrneACvx580y80vEm---ZxOLfzOSeNe98DzxbbKIu0G0t5nA9dkUsyUPr6g4Jhy3fkqvS651bWozv5f-774oQ1IwEZrsIi9SqRGpLkiPzfrZ-0RaJGoBDB7pZjzR7tehj-Oucd4whyWTYd1Dlqx95_KLF9anzAf_t66aPQU3w_5uJvNTU7sNfOD6gS-zjVLJ0caZW1J-lvYgcf-Ny9dIvba1I64tGqzXOwm0TS4PJaca1osu6zwinyFk2L0LZfNtieyC3JX_XlQ")
-# print(code)
-# token_info = sp_oauth.get_access_token(code)
-#
-# token = token_info['access_token']
 
-token = util.prompt_for_user_token(username, scope, client_id, client_secret_id, redirect_uri)
+###
+#
+###
+
+def reauth(conn_str: str) -> "token":
+    """Reauthorize spotify app.
+    :param conn_str: "https://www.google.com/?code=AQBBH8rayjMv1yRGBQFMZK5jJkMEWxJi5HMuK_qZubCj71HoMzMD0mH_v8WVGEd3kuYsTw7TB0uKwlmTVmUz3q8xcSwX6ppHHrP0aykTqtTHlLePVsXuvCdH8MsZjVo6E0fXSEmN4xwCK5MXIDVu6AAn2EzxdlgtdbdKrBXSzR9Tt--B19vYkOPTtteTGF1bmzHUTBGSC-P-pH3nRvtqA4v90LlEMFFcMKUPfMKKOpAxNtGGLNhqc4opynVIJ_Gk3tTLbbrpKdYY_Ftq56gf6RTh9YWGTg"
+    :type conn_str: str
+    :return: token
+    """
+    sp_oauth = oauth2.SpotifyOAuth(client_id, client_secret_id, redirect_uri,
+                                   scope=scope, cache_path=".cache-" + username)
+    code = sp_oauth.parse_response_code(conn_str)
+    print(code)
+    token_info = sp_oauth.get_access_token(code)
+
+    token = token_info['access_token']
+    return token
+
+
+try:
+    token = util.prompt_for_user_token(username, scope, client_id, client_secret_id, redirect_uri)
+except Exception as e:
+    token = None
+    raise Exception("Unable to obtain token")
 
 try:
     spotify = spotipy.Spotify(auth=token)
@@ -61,4 +78,5 @@ def get_artist_top_tracks(artist_id):
 
 
 if __name__ == '__main__':
-    pass
+    reauth(
+        "https://www.google.com/?code=AQBBH8rayjMv1yRGBQFMZK5jJkMEWxJi5HMuK_qZubCj71HoMzMD0mH_v8WVGEd3kuYsTw7TB0uKwlmTVmUz3q8xcSwX6ppHHrP0aykTqtTHlLePVsXuvCdH8MsZjVo6E0fXSEmN4xwCK5MXIDVu6AAn2EzxdlgtdbdKrBXSzR9Tt--B19vYkOPTtteTGF1bmzHUTBGSC-P-pH3nRvtqA4v90LlEMFFcMKUPfMKKOpAxNtGGLNhqc4opynVIJ_Gk3tTLbbrpKdYY_Ftq56gf6RTh9YWGTg")
