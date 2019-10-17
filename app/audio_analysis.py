@@ -6,7 +6,7 @@ from naga import mapv, append, get_in
 from functools import partial
 
 
-def get_all_saved_artists() -> list:
+def get_all_fav_artists() -> list:
     st = get_saved_artists('short_term')
     stitems = st['items']
     mt = get_saved_artists('medium_term')
@@ -25,9 +25,9 @@ def one_track_audio_features():
     return data
 
 
-def audio_features_all_saved():
-    saved_artists = get_all_saved_artists()
-    saved_artist_uri = set(mapv(get_artist_uris, saved_artists))
+def audio_features_all_favs() -> list:
+    fav_artists = get_all_fav_artists()
+    saved_artist_uri = set(mapv(get_artist_uris, fav_artists))
     # 91 different top saved artists (9/16/19)
     ttrack_database = []
     for artist in saved_artist_uri:
@@ -35,7 +35,7 @@ def audio_features_all_saved():
         for song in all_artist_top_songs:
             ttrack_database.append(song['uri'])
     # a database that is a list
-    # of user's top artist's top tracks, 921 songs (9/16/19)
+    # of user's top artist's top tracks, 921 songs (9/16/19), 750 songs (10/11/19)
     return ttrack_database
 
 
@@ -94,17 +94,26 @@ def is_song_color(color: dict, song: dict) -> bool:
         return True
 
 
-def create_color_data() -> list:
-    with open('all_songs_features.json') as f:
-        all_songs_features = json.load(f)
-    color = input("choose a color... red, blue, green, pink, yellow")
-    colorsongs = list(filter(partial(is_song_color, colors[color]), all_songs_features.values()))
-    with open('colorsongs.json', 'w') as f: f.write(json.dumps(colorsongs, indent=2))
+def get_song_features():
+    with open('json_data/all_fav_songs_features.json') as f:
+        all_fav_songs_features = json.load(f)
+    return all_fav_songs_features
+
+
+def create_color_data(color: str) -> list:
+    all_fav_songs_features = get_song_features()
+    colorsongs = list(filter(partial(is_song_color, colors[color]), all_fav_songs_features.values()))
     return colorsongs
 
 
-def create_color_pl(colorsongs: list, color: str) -> None:
-    pl_id = create_playlist(color)
+def save_songs(colorsongs):
+    with open('colorsongs.json', 'w') as f:
+        f.write(json.dumps(colorsongs, indent=2))
+    return colorsongs
+
+
+def create_color_pl(colorsongs: list, title: str) -> None:
+    pl_id = create_playlist(title)
     playlist = []
     for song in colorsongs:
         song_uris = get_artist_uris(song)
@@ -114,9 +123,10 @@ def create_color_pl(colorsongs: list, color: str) -> None:
 
 
 if __name__ == '__main__':
-    pass
-    # yellow3 = one_track_audio_features()
-    # top_artist_top_tracks = audio_features_all_saved()
-    # colorsongs = create_color_data()
+    # top_artist_top_tracks = audio_features_all_favs()
+    # print(len(top_artist_top_tracks))
+    colorsongs = create_color_data("red")
+    save_songs(colorsongs)
     # print(create_color_pl(colorsongs, "green"))
+    # # yellow3 = one_track_audio_features()
     # with open('yellow3.json', 'w') as f: f.write(json.dumps(yellow3, indent=2))
