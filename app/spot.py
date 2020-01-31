@@ -2,7 +2,7 @@
 import sys
 import spotipy
 from spotipy import util as util, oauth2
-from polyjamoury.app.config import username, scope, client_id, client_secret_id, redirect_uri
+from app.config import username, scope, client_id, client_secret_id, redirect_uri
 
 
 ###
@@ -76,7 +76,8 @@ def audio_features(tracks):
 def get_artist_top_tracks(artist_id):
     return spotify.artist_top_tracks(artist_id, country='US')
 
+
 #
 if __name__ == '__main__':
     reauth(
-        "https://www.google.com/?code=AQBBH8rayjMv1yRGBQFMZK5jJkMEWxJi5HMuK_qZubCj71HoMzMD0mH_v8WVGEd3kuYsTw7TB0uKwlmTVmUz3q8xcSwX6ppHHrP0aykTqtTHlLePVsXuvCdH8MsZjVo6E0fXSEmN4xwCK5MXIDVu6AAn2EzxdlgtdbdKrBXSzR9Tt--B19vYkOPTtteTGF1bmzHUTBGSC-P-pH3nRvtqA4v90LlEMFFcMKUPfMKKOpAxNtGGLNhqc4opynVIJ_Gk3tTLbbrpKdYY_Ftq56gf6RTh9YWGTg")
+        "https://www.google.com/?code=AQCkBr_dg3QmJdX-7S1LR7m2rJNpRBNahqPrawWbj2Rk3wpgIrE1wrenGBELDuvg9c7quZIO_zqZhEcGY3tbAwRCOJCIqXufG9mgFYRAjlcHW0A06c0_TftFcxFIMwbwCK8f83SU0k00LkPKd7iUv9J6krlEu3Jzdrt5WJTLws0za_TQl8oDUvqO0JPCnuhhQ25xaWrIEFyYRpu4hJCiq9-xQozMxRyDk00XGLhyZpBQjB6qFecqqd1QaORpX5R1YhZTY1eJZfH8jgRlGpd2Sq59UBo")

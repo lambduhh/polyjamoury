@@ -1,6 +1,6 @@
-from polyjamoury.app.spot import get_one_track, audio_features, get_saved_artists, \
+from app.spot import get_one_track, audio_features, get_saved_artists, \
     add_tracks_to_playlist, get_artist_top_tracks
-from polyjamoury.app.utils import get_track_uris, list_to_string, get_artist_uris, create_playlist
+from app.utils import get_track_uris, list_to_string, get_artist_uris, create_playlist
 import json
 from naga import mapv, append, get_in
 from functools import partial
@@ -125,7 +125,7 @@ def create_color_pl(colorsongs: list, title: str) -> None:
 if __name__ == '__main__':
     # top_artist_top_tracks = audio_features_all_favs()
     # print(len(top_artist_top_tracks))
-    colorsongs = create_color_data("red")
+    colorsongs = create_color_data("")
     save_songs(colorsongs)
     # print(create_color_pl(colorsongs, "green"))
     # # yellow3 = one_track_audio_features()

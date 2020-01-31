@@ -4,7 +4,7 @@ from typing import Any
 
 from naga import get_in, fpartial, nil, get, append
 
-from polyjamoury.app.spot import playlist_create
+from app.spot import playlist_create
 
 
 def open_json_data(data):
